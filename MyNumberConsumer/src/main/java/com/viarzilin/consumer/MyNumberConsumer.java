@@ -1,5 +1,7 @@
 package com.viarzilin.consumer;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.viarzilin.domain.MyNumber;
 import com.viarzilin.service.MyNumberService;
 import lombok.RequiredArgsConstructor;
@@ -14,9 +16,16 @@ import org.springframework.stereotype.Component;
 public class MyNumberConsumer {
     private final MyNumberService service;
 
-    @KafkaListener(topics = "myNumber")
-    public void consumeMyNumber(MyNumber number) {
-        log.info(number.toString());
-        service.saveMyNumber(number);
+    @KafkaListener(topics = "myNumber", groupId = "1")
+    public void consumeMyNumber(String number) {
+        ObjectMapper mapper = new ObjectMapper();
+        MyNumber num = null;
+        try {
+            num = mapper.readValue(number, MyNumber.class);
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
+        }
+        log.info(num.toString());
+        service.saveMyNumber(num);
     }
 }
