@@ -4,6 +4,8 @@
 2. Реализовать приложение, читающее число из топика Kafka и сохраняющее его в таблицу БД.
 3. Стек: Java/Kotlin, Spring Boot, Kafka, Docker, Docker Compose, Jmeter, любая БД.
 
+**Для старта проекта в корне проекта выполнить "docker-compose up -d" и поочередно запустить файлы Application сначала для подпроекта MyNumberProducer, затем для MyNumberConsumer.**
+
 **Результаты тестов (1000 запросов)**
 ![img.png](img.png)
 
